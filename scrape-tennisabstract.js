@@ -154,7 +154,7 @@ async function main() {
         allRows.push({ Player: player, ...r });
       }
       // udvarias késleltetés, hogy ne terheljük a szervert
-      await page.waitForTimeout(1200);
+      await new Promise((resolve) => setTimeout(resolve, 1200));
     } catch (err) {
       console.error(`Hiba a(z) ${player} feldolgozásánál:`, err.message);
     }
@@ -187,4 +187,3 @@ main().catch((err) => {
   console.error("Váratlan hiba:", err);
   process.exit(1);
 });
-
