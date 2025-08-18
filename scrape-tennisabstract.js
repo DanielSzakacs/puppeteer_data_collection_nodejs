@@ -80,6 +80,7 @@ async function scrapePlayer(page, playerName) {
     const aPctIdx = idx("A%");
     const dfPctIdx = idx("DF%");
     const bpsvdIdx = idx("BPSvd");
+    const tournamentIdx = idx("Tournament");
     const vRkIdx = idx("vRk");
     const scoreIdx = idx("Score");
 
@@ -107,7 +108,9 @@ async function scrapePlayer(page, playerName) {
 
         return {
           Date: get(dateIdx),
+          Tournament: get(tournamentIdx),
           Rk: get(rkIdx),
+          vRk: get(vRkIdx),
           DR: get(drIdx),
           "A%": get(aPctIdx),
           "DF%": get(dfPctIdx),
@@ -166,7 +169,9 @@ async function main() {
   const headers = [
     "Player",
     "Date",
+    "Tournament",
     "Rk",
+    "vRk",
     "DR",
     "A%",
     "DF%",
