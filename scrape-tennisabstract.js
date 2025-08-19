@@ -33,8 +33,9 @@ async function readPlayers(filePath) {
 
 async function scrapePlayer(page, playerName) {
   const url = `https://www.tennisabstract.com/cgi-bin/player.cgi?p=${encodeURIComponent(
-    playerName
+    playerName.replace(" ", "")
   )}`;
+  console.log(url);
   await page.goto(url, { waitUntil: "networkidle2", timeout: 90_000 });
 
   const profile = await page.evaluate(() => {
