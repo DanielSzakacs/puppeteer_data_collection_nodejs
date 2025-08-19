@@ -20,4 +20,5 @@ The generated CSV includes the following columns:
 - `DF%`
 - `BPSvd`
 - `Opponent`
+- `Winner`
 
