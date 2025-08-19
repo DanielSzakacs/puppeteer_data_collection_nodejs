@@ -110,11 +110,21 @@ async function scrapePlayer(page, playerName) {
           i >= 0 && i < tds.length ? tds[i].textContent.trim() : "";
 
         let opponent = "";
+        let oppCellText = "";
         if (oppIdx >= 0 && oppIdx < tds.length) {
-          const link = tds[oppIdx].querySelector("a");
-          opponent = link
-            ? link.textContent.trim()
-            : tds[oppIdx].textContent.trim();
+          const cell = tds[oppIdx];
+          oppCellText = cell.textContent.trim();
+          const link = cell.querySelector("a");
+          opponent = link ? link.textContent.trim() : oppCellText;
+        }
+
+        let is_winner = "";
+        if (oppCellText && opponent) {
+          const parts = oppCellText.split(" d. ");
+          if (parts.length > 1) {
+            const winnerPart = parts[0].toLowerCase();
+            is_winner = winnerPart.includes(opponent.toLowerCase()) ? 0 : 1;
+          }
         }
 
         const scoreText = get(scoreIdx);
