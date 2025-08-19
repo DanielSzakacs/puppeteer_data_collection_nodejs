@@ -37,6 +37,16 @@ async function scrapePlayer(page, playerName) {
   )}`;
   await page.goto(url, { waitUntil: "networkidle2", timeout: 90_000 });
 
+  const profile = await page.evaluate(() => {
+    const text = document.body.innerText;
+    const ageMatch = text.match(/Age[: ]+([0-9.]+)/i);
+    const playsMatch = text.match(/Plays[: ]+([^\n]+)/i);
+    return {
+      Age: ageMatch ? ageMatch[1].trim() : "",
+      Plays: playsMatch ? playsMatch[1].trim() : "",
+    };
+  });
+
   // Keressük meg azt a táblázatot, amelynek a fejléce többek közt tartalmazza a Date és Score oszlopokat
   await page.waitForFunction(
     () => {
@@ -121,7 +131,7 @@ async function scrapePlayer(page, playerName) {
       .filter((r) => r.Date); // üres sorok kiszűrése
   });
 
-  return rows;
+  return rows.map((r) => ({ ...r, ...profile }));
 }
 
 async function main() {
@@ -168,6 +178,8 @@ async function main() {
   // CSV kiírás
   const headers = [
     "Player",
+    "Age",
+    "Plays",
     "Date",
     "Tournament",
     "Rk",
