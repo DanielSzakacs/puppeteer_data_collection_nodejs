@@ -15,6 +15,7 @@ Forrás URL sablon: `https://www.tennisabstract.com/cgi-bin/player.cgi?p=[tennis
 - `DF%`
 - `BPSvd`
 - **Opponent** (külön kérésre: az ellenfél neve). Az ellenfél neve a táblázatban a `vRk` és a `Score` oszlop **között** található cellában, és **mindig kattintható** (anchor `<a>`), ezért link segítségével azonosítjuk.
+- `Winner` (a győztes neve; ha az ellenfél neve a "d." előtt szerepel, akkor ő nyert, különben a forrás játékos).
 
 ## Bemenet és kimenet
 

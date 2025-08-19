@@ -110,11 +110,17 @@ async function scrapePlayer(page, playerName) {
           i >= 0 && i < tds.length ? tds[i].textContent.trim() : "";
 
         let opponent = "";
+        let opponentWins = false;
         if (oppIdx >= 0 && oppIdx < tds.length) {
-          const link = tds[oppIdx].querySelector("a");
+          const cell = tds[oppIdx];
+          const link = cell.querySelector("a");
           opponent = link
             ? link.textContent.trim()
-            : tds[oppIdx].textContent.trim();
+            : cell.textContent.trim();
+          const cellText = cell.textContent;
+          const dIndex = cellText.indexOf("d.");
+          const oppIndex = cellText.indexOf(opponent);
+          opponentWins = dIndex !== -1 && oppIndex !== -1 && oppIndex < dIndex;
         }
 
         return {
@@ -127,12 +133,20 @@ async function scrapePlayer(page, playerName) {
           "DF%": get(dfPctIdx),
           BPSvd: get(bpsvdIdx),
           Opponent: opponent,
+          WinnerIsOpponent: opponentWins,
         };
       })
       .filter((r) => r.Date); // üres sorok kiszűrése
   });
 
-  return rows.map((r) => ({ ...r, ...profile }));
+  return rows.map((r) => {
+    const { WinnerIsOpponent, ...rest } = r;
+    return {
+      ...rest,
+      Winner: WinnerIsOpponent ? r.Opponent : playerName,
+      ...profile,
+    };
+  });
 }
 
 async function main() {
@@ -190,6 +204,7 @@ async function main() {
     "DF%",
     "BPSvd",
     "Opponent",
+    "Winner",
   ];
   const csv = [headers.map(escapeCSV).join(",")]
     .concat(
