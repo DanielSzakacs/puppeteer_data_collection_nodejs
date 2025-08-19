@@ -117,6 +117,16 @@ async function scrapePlayer(page, playerName) {
             : tds[oppIdx].textContent.trim();
         }
 
+        const scoreText = get(scoreIdx);
+        let is_winner = "";
+        if (scoreText && opponent) {
+          const parts = scoreText.split(" d. ");
+          if (parts.length > 1) {
+            const winnerPart = parts[0].toLowerCase();
+            is_winner = winnerPart.includes(opponent.toLowerCase()) ? 0 : 1;
+          }
+        }
+
         return {
           Date: get(dateIdx),
           Tournament: get(tournamentIdx),
@@ -127,6 +137,7 @@ async function scrapePlayer(page, playerName) {
           "DF%": get(dfPctIdx),
           BPSvd: get(bpsvdIdx),
           Opponent: opponent,
+          is_winner,
         };
       })
       .filter((r) => r.Date); // üres sorok kiszűrése
@@ -190,6 +201,7 @@ async function main() {
     "DF%",
     "BPSvd",
     "Opponent",
+    "is_winner",
   ];
   const csv = [headers.map(escapeCSV).join(",")]
     .concat(
