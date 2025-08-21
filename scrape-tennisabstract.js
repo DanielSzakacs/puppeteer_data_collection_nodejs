@@ -33,7 +33,7 @@ async function readPlayers(filePath) {
 
 async function scrapePlayer(page, playerName) {
   const url = `https://www.tennisabstract.com/cgi-bin/player.cgi?p=${encodeURIComponent(
-    playerName.replace(" ", "")
+    playerName.replaceAll(" ", "")
   )}`;
   console.log(url);
   await page.goto(url, { waitUntil: "networkidle2", timeout: 90_000 });
@@ -114,9 +114,7 @@ async function scrapePlayer(page, playerName) {
         if (oppIdx >= 0 && oppIdx < tds.length) {
           const cell = tds[oppIdx];
           const link = cell.querySelector("a");
-          opponent = link
-            ? link.textContent.trim()
-            : cell.textContent.trim();
+          opponent = link ? link.textContent.trim() : cell.textContent.trim();
           const cellText = cell.textContent;
           const dIndex = cellText.indexOf("d.");
           const oppIndex = cellText.indexOf(opponent);

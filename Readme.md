@@ -22,3 +22,7 @@ The generated CSV includes the following columns:
 - `Opponent`
 - `Winner`
 
+node scrape-tennisabstract.js players.txt output.csv
+
+JupyterNotebook notes:
+https://colab.research.google.com/drive/1FRoCQ7Oqm3nYZZ1JVu_vjFNpPkOJ1FlB#scrollTo=X8Td3icoSN_7
