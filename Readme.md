@@ -13,6 +13,7 @@ The generated CSV includes the following columns:
 - `Plays`
 - `Date`
 - `Tournament`
+- `Rd`
 - `Rk`
 - `vRk`
 - `DR`
