@@ -86,13 +86,14 @@ async function scrapePlayer(page, playerName) {
     const idx = (name) => headers.indexOf(name);
 
     const dateIdx = idx("Date");
+    const tournamentIdx = idx("Tournament");
+    const rdIdx = idx("Rd");
     const rkIdx = idx("Rk");
+    const vRkIdx = idx("vRk");
     const drIdx = idx("DR");
     const aPctIdx = idx("A%");
     const dfPctIdx = idx("DF%");
     const bpsvdIdx = idx("BPSvd");
-    const tournamentIdx = idx("Tournament");
-    const vRkIdx = idx("vRk");
     const scoreIdx = idx("Score");
 
     // Ellenfél oszlop: a vRk és a Score között, és benne egy <a> link a játékos nevével
@@ -124,6 +125,7 @@ async function scrapePlayer(page, playerName) {
         return {
           Date: get(dateIdx),
           Tournament: get(tournamentIdx),
+          Rd: get(rdIdx),
           Rk: get(rkIdx),
           vRk: get(vRkIdx),
           DR: get(drIdx),
@@ -195,6 +197,7 @@ async function main() {
     "Plays",
     "Date",
     "Tournament",
+    "Rd",
     "Rk",
     "vRk",
     "DR",
